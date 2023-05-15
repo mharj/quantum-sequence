@@ -17,6 +17,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm test
+      - run: npm run coverage
       - run: npm run lint
 
       - name: Get current repo version
