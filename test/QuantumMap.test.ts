@@ -37,7 +37,7 @@ const spyLogger: ILoggerLike = {
 	info: infoSpy,
 };
 
-const driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, undefined, spyLogger);
+const driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null, undefined, spyLogger);
 
 let map: QuantumMap<string, Data>;
 

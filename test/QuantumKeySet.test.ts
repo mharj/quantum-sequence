@@ -23,7 +23,7 @@ const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,
 };
 
-const driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer);
+const driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null);
 
 let set: QuantumKeySet<Data, 'date'>;
 
