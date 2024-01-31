@@ -26,7 +26,7 @@ const bufferSerializer: IPersistSerializer<Map<string, Data>, Buffer> = {
 	deserialize: (buffer: Buffer) => new Map(JSON.parse(buffer.toString())),
 	validator: (data: Map<string, number>) => mapDataSchema.safeParse(data).success,
 };
-const driver = new MemoryStorageDriver('QuantumMapDriver', bufferSerializer); // MemoryStorageDriver as example driver
+const driver = new MemoryStorageDriver('QuantumMapDriver', bufferSerializer, null); // MemoryStorageDriver as example driver
 
 // Create a new QuantumMap instance with a tachyon-drive storage driver
 // ⚠️Warning⚠️: if using non-primitive types as keys, you must get actual value first from keys() method before call "delete" or "has" methods as hydrate will replace the object reference (manually or via updates) and the reference will be lost.
@@ -60,7 +60,7 @@ const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
 	deserialize: (buffer: Buffer) => new Set(zod.array(dataSchema).parse(JSON.parse(buffer.toString()))),
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,
 };
-const driver = new MemoryStorageDriver('QuantumKeySet', bufferSerializer); // MemoryStorageDriver as example driver
+const driver = new MemoryStorageDriver('QuantumKeySet', bufferSerializer, null); // MemoryStorageDriver as example driver
 
 // Create a new QuantumKeySet instance with a tachyon-drive storage driver
 type Data = {key: string; value: string};
@@ -91,7 +91,7 @@ const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
 	deserialize: (buffer: Buffer) => new Set(zod.array(dataSchema).parse(JSON.parse(buffer.toString()))),
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,
 };
-const driver = new MemoryStorageDriver('QuantumSetDriver', bufferSerializer); // MemoryStorageDriver as example driver
+const driver = new MemoryStorageDriver('QuantumSetDriver', bufferSerializer, null); // MemoryStorageDriver as example driver
 
 // Create a new QuantumSet instance with a tachyon-drive storage driver
 // ⚠️Warning⚠️: if using non-primitive types, you must get actual value first from values() method before call "delete" or "has" methods as hydrate will replace the object reference (manually or via updates) and the reference will be lost.

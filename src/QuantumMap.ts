@@ -1,7 +1,7 @@
-import {IStorageDriver} from 'tachyon-drive';
-import type {ILoggerLike} from '@avanio/logger-like';
 import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
+import type {ILoggerLike} from '@avanio/logger-like';
 import {IQuantumMap} from './IQuantumMap';
+import {IStorageDriver} from 'tachyon-drive';
 
 type QuantumMapStore<TKey, TValue> = Map<TKey, TValue>;
 

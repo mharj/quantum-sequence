@@ -1,7 +1,7 @@
-import {IStorageDriver} from 'tachyon-drive';
+import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
 import type {ILoggerLike} from '@avanio/logger-like';
 import {IQuantumSet} from './IQuantumSet';
-import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
+import {IStorageDriver} from 'tachyon-drive';
 
 type QuantumSetStore<TValue> = Set<TValue>;
 

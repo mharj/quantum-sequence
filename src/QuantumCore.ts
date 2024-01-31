@@ -1,5 +1,5 @@
-import {IStorageDriver} from 'tachyon-drive';
 import type {ILoggerLike} from '@avanio/logger-like';
+import {IStorageDriver} from 'tachyon-drive';
 
 export interface QuantumCoreOptions {
 	/**
