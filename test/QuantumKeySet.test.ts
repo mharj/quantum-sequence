@@ -1,8 +1,8 @@
-import * as zod from 'zod';
-import * as chai from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
 import 'mocha';
-import {MemoryStorageDriver, IPersistSerializer} from 'tachyon-drive';
+import * as chai from 'chai';
+import * as zod from 'zod';
+import {IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
+import chaiAsPromised from 'chai-as-promised';
 import {QuantumKeySet} from '../src/QuantumKeySet';
 
 chai.use(chaiAsPromised);

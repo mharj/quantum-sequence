@@ -1,11 +1,12 @@
-import * as zod from 'zod';
-import * as chai from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
-import type {ILoggerLike} from '@avanio/logger-like';
+/* eslint-disable sort-keys */
 import 'mocha';
-import {MemoryStorageDriver, IPersistSerializer} from 'tachyon-drive';
-import {QuantumMap} from '../src/QuantumMap';
+import * as chai from 'chai';
 import * as sinon from 'sinon';
+import * as zod from 'zod';
+import {IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
+import chaiAsPromised from 'chai-as-promised';
+import type {ILoggerLike} from '@avanio/logger-like';
+import {QuantumMap} from '../src/QuantumMap';
 
 chai.use(chaiAsPromised);
 
