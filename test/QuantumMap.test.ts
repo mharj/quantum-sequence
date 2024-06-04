@@ -3,9 +3,9 @@ import 'mocha';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as zod from 'zod';
+import {type ILoggerLike, LogLevel} from '@avanio/logger-like';
 import {IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
 import chaiAsPromised from 'chai-as-promised';
-import type {ILoggerLike} from '@avanio/logger-like';
 import {QuantumMap} from '../src/QuantumMap';
 
 chai.use(chaiAsPromised);
@@ -21,6 +21,7 @@ const mapDataSchema = zod.map(zod.string(), dataSchema);
 type Data = zod.infer<typeof dataSchema>;
 
 const bufferSerializer: IPersistSerializer<Map<string, Data>, Buffer> = {
+	name: 'BufferSerializer',
 	serialize: (data: Map<string, Data>) => Buffer.from(JSON.stringify(Array.from(data))),
 	deserialize: (buffer: Buffer) => new Map(JSON.parse(buffer.toString())),
 	validator: (data: Map<string, Data>) => mapDataSchema.safeParse(data).success,
@@ -38,8 +39,18 @@ const spyLogger: ILoggerLike = {
 	info: infoSpy,
 };
 
-const driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null, undefined, spyLogger);
+const debugLogMapping = {
+	clear: LogLevel.Debug,
+	deserialize: LogLevel.Debug,
+	hydrate: LogLevel.Debug,
+	init: LogLevel.Debug,
+	store: LogLevel.Debug,
+	unload: LogLevel.Debug,
+	update: LogLevel.Debug,
+	validator: LogLevel.Debug,
+};
 
+let driver: MemoryStorageDriver<Map<string, {test: string}>, Buffer>;
 let map: QuantumMap<string, Data>;
 
 describe('QuantumMap', () => {
@@ -50,6 +61,8 @@ describe('QuantumMap', () => {
 		infoSpy.resetHistory();
 	});
 	it('should create a new instance', async () => {
+		driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null, undefined, spyLogger);
+		driver.setLogMapping(debugLogMapping);
 		map = new QuantumMap<string, Data>(driver, undefined, spyLogger);
 		await map.init();
 		expect(debugSpy.callCount).to.be.equal(4);

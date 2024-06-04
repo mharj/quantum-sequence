@@ -22,7 +22,7 @@ export abstract class QuantumCore<TStore> {
 		this.driver = driver;
 		this.initialData = initialData;
 		this.data = this.driver.clone(this.initialData);
-		this.driver.onUpdate(this.onUpdateCallback); // hook into the driver to update the data when it changes
+		this.driver.on('update', this.onUpdateCallback.bind(this)); // hook into the driver to update the data when it changes
 		this.logger = logger;
 		this.options = options;
 		this.logger?.debug(`QuantumCore: constructor()`);
