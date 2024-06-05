@@ -1,6 +1,6 @@
 {
     "name": "quantum-sequence",
-    "version": "0.8.0",
+    "version": "0.8.1",
     "description": "Map and Set implementations which uses tachyon-drive as storage backend",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
