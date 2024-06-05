@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable sort-keys */
 import 'mocha';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as zod from 'zod';
 import {type ILoggerLike, LogLevel} from '@avanio/logger-like';
-import {IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
+import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
 import chaiAsPromised from 'chai-as-promised';
 import {QuantumMap} from '../src/QuantumMap';
 
@@ -63,7 +64,14 @@ describe('QuantumMap', () => {
 	it('should create a new instance', async () => {
 		driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null, undefined, spyLogger);
 		driver.setLogMapping(debugLogMapping);
-		map = new QuantumMap<string, Data>(driver, undefined, spyLogger);
+		map = new QuantumMap<string, Data>(driver, undefined, spyLogger, {
+			clear: LogLevel.Debug,
+			constructor: LogLevel.Debug,
+			init: LogLevel.Debug,
+			store: LogLevel.Debug,
+			notify_hydrate: LogLevel.Debug,
+			register_hydrate_callback: LogLevel.Debug,
+		});
 		await map.init();
 		expect(debugSpy.callCount).to.be.equal(4);
 		expect(debugSpy.getCall(0).firstArg).to.be.equal('QuantumCore: constructor()');

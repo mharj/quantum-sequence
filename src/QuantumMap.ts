@@ -1,7 +1,8 @@
-import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from '.';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {IQuantumMap} from './IQuantumMap';
-import {IStorageDriver} from 'tachyon-drive';
+import {type IQuantumMap} from './IQuantumMap';
+import {type IStorageDriver} from 'tachyon-drive';
 
 type QuantumMapStore<TKey, TValue> = Map<TKey, TValue>;
 
@@ -9,8 +10,13 @@ type QuantumMapStore<TKey, TValue> = Map<TKey, TValue>;
  * A QuantumMap is a Map that is persisted to a storage driver when data is modified.
  */
 export class QuantumMap<TKey, TValue> extends QuantumCore<QuantumMapStore<TKey, TValue>> implements IQuantumMap<TKey, TValue> {
-	constructor(driver: IStorageDriver<QuantumMapStore<TKey, TValue>>, options: QuantumCoreOptions = {}, logger?: ILoggerLike | Console) {
-		super(driver, new Map<TKey, TValue>(), options, logger);
+	constructor(
+		driver: IStorageDriver<QuantumMapStore<TKey, TValue>>,
+		options: QuantumCoreOptions = {},
+		logger?: ILoggerLike,
+		logMapping: QuantumCoreLogMap = defaultQuantumCoreLogLevels,
+	) {
+		super(driver, new Map<TKey, TValue>(), options, logger, logMapping);
 	}
 
 	public init(): Promise<void> {

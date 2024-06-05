@@ -1,3 +1,4 @@
+export * from './QuantumCoreLogMapping';
 export * from './IQuantumMap';
 export * from './IQuantumSet';
 export * from './IQuantumSequence';

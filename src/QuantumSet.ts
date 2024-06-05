@@ -1,7 +1,8 @@
-import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from '.';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {IQuantumSet} from './IQuantumSet';
-import {IStorageDriver} from 'tachyon-drive';
+import {type IQuantumSet} from './IQuantumSet';
+import {type IStorageDriver} from 'tachyon-drive';
 
 type QuantumSetStore<TValue> = Set<TValue>;
 
@@ -12,8 +13,13 @@ type QuantumSetStore<TValue> = Set<TValue>;
  * Or use QuantumKeySet or QuantumMap with primitive key instead.
  */
 export class QuantumSet<TValue> extends QuantumCore<QuantumSetStore<TValue>> implements IQuantumSet<TValue> {
-	constructor(driver: IStorageDriver<QuantumSetStore<TValue>>, options: QuantumCoreOptions = {}, logger?: ILoggerLike | Console) {
-		super(driver, new Set(), options, logger);
+	constructor(
+		driver: IStorageDriver<QuantumSetStore<TValue>>,
+		options: QuantumCoreOptions = {},
+		logger?: ILoggerLike,
+		logMapping: QuantumCoreLogMap = defaultQuantumCoreLogLevels,
+	) {
+		super(driver, new Set(), options, logger, logMapping);
 	}
 
 	public init(): Promise<void> {

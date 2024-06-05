@@ -87,6 +87,7 @@ import {QuantumSet} from 'quantum-sequence';
 // Create a new TachyonDrive instance and serializer setup
 const setDataSchema = zod.set(zod.string());
 const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
+	name: 'BufferSerializer',
 	serialize: (data: Set<Data>) => Buffer.from(JSON.stringify(Array.from(data))),
 	deserialize: (buffer: Buffer) => new Set(zod.array(dataSchema).parse(JSON.parse(buffer.toString()))),
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,

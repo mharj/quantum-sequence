@@ -1,4 +1,4 @@
-import {IQuantumSequence} from './IQuantumSequence';
+import {type IQuantumSequence} from './IQuantumSequence';
 
 /**
  * This is the simple Set style interface for the QuantumSet class implementation.

@@ -1,7 +1,8 @@
-import {QuantumCore, QuantumCoreOptions} from './QuantumCore';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from '.';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {IQuantumMap} from './IQuantumMap';
-import {IStorageDriver} from 'tachyon-drive';
+import {type IQuantumMap} from './IQuantumMap';
+import {type IStorageDriver} from 'tachyon-drive';
 
 type QuantumKey<TValue> = keyof TValue;
 type QuantumKeyValue<TValue> = TValue[keyof TValue];
@@ -23,9 +24,10 @@ export class QuantumKeySet<TValue, LookupKey extends QuantumKey<TValue>>
 		lookupValueBuilder: QuantumPrimitiveBuildCallback<TValue>,
 		driver: IStorageDriver<QuantumSetStore<TValue>>,
 		options: QuantumCoreOptions = {},
-		logger?: ILoggerLike | Console,
+		logger?: ILoggerLike,
+		logMapping: QuantumCoreLogMap = defaultQuantumCoreLogLevels,
 	) {
-		super(driver, new Set(), options, logger);
+		super(driver, new Set(), options, logger, logMapping);
 		this.lookupKey = lookupKey;
 		this.lookupValueBuilder = lookupValueBuilder;
 	}
