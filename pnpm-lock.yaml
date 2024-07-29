@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@avanio/logger-like':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.2.0
+        version: 0.2.0
       tachyon-drive:
         specifier: ^0.8.0
         version: 0.8.0
@@ -102,6 +102,9 @@ packages:
 
   '@avanio/logger-like@0.1.1':
     resolution: {integrity: sha512-5u1ZX6kR9wgt4eYQYrgdhKL0WAsiWz2Kbinp+lPyoEs4/uFl2BhgG5X7obG2OZ2NvZL4f76X6Qm+QsT/o5BOYA==}
+
+  '@avanio/logger-like@0.2.0':
+    resolution: {integrity: sha512-eiaYKaICZyhxyW8266L0piKMoUcEAlPCB/Bm0VvNRnuQ8cF85lN3yPJ3onzHRukL/gKg09uGvAbCIm5ZsyJ3PQ==}
 
   '@babel/code-frame@7.24.6':
     resolution: {integrity: sha512-ZJhac6FkEd1yhG2AHOmfcXG4ceoLltoCVJjN5XsWN9BifBQr+cHJbWi0h68HZuSORq+3WtJ2z0hwF2NG1b5kcA==}
@@ -353,6 +356,7 @@ packages:
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -360,6 +364,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -2342,6 +2347,8 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
 
   '@avanio/logger-like@0.1.1': {}
+
+  '@avanio/logger-like@0.2.0': {}
 
   '@babel/code-frame@7.24.6':
     dependencies:
