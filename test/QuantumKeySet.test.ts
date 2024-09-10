@@ -1,26 +1,26 @@
 import 'mocha';
 import * as chai from 'chai';
-import * as zod from 'zod';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
 import chaiAsPromised from 'chai-as-promised';
-import {QuantumKeySet} from '../src/QuantumKeySet';
+import {QuantumKeySet} from '../src/index.js';
+import {z} from 'zod';
 
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-const dataSchema = zod.object({
-	date: zod.coerce.date(),
+const dataSchema = z.object({
+	date: z.coerce.date(),
 });
 
-const setDataSchema = zod.set(dataSchema);
+const setDataSchema = z.set(dataSchema);
 
-type Data = zod.infer<typeof dataSchema>;
+type Data = z.infer<typeof dataSchema>;
 
 const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
 	name: 'BufferSerializer',
 	serialize: (data: Set<Data>) => Buffer.from(JSON.stringify(Array.from(data))),
-	deserialize: (buffer: Buffer) => new Set(zod.array(dataSchema).parse(JSON.parse(buffer.toString()))),
+	deserialize: (buffer: Buffer) => new Set(z.array(dataSchema).parse(JSON.parse(buffer.toString()))),
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,
 };
 
@@ -31,12 +31,18 @@ let set: QuantumKeySet<Data, 'date'>;
 const ts = 1677844069703;
 
 describe('QuantumKeySet', () => {
-	it('should create a new instance', async () => {
+	it('should create and set empty logging', function () {
 		set = new QuantumKeySet<Data, 'date'>('date', (value) => value.getTime(), driver);
+		driver.emit('update', undefined); // this calls QuantumCore.onUpdateCallback to re-initialize the set
+		set.setLogger(undefined);
+		set.setLogMapping({});
+	});
+	it('should create a new instance', async () => {
 		await set.init();
 	});
 	it('should set a value', async () => {
 		await set.set(new Date(ts), {date: new Date(ts)});
+		await set.set(new Date(ts), {date: new Date(ts)}); // should not throw
 	});
 	it('should get a value', async () => {
 		set = new QuantumKeySet<Data, 'date'>('date', (value) => value.getTime(), driver); // we should hydrate the set from the driver

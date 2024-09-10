@@ -1,12 +1,12 @@
-import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from '.';
-import {QuantumCore, type QuantumCoreOptions} from './QuantumCore';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from './QuantumCoreLogMapping.js';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore.js';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {type IQuantumMap} from './IQuantumMap';
+import {type IQuantumMap} from './IQuantumMap.js';
 import {type IStorageDriver} from 'tachyon-drive';
 
 type QuantumKey<TValue> = keyof TValue;
 type QuantumKeyValue<TValue> = TValue[keyof TValue];
-type QuantumSetStore<TValue> = Set<TValue>;
+export type QuantumKeySetStore<TValue> = Set<TValue>;
 
 /**
  * primitive key value we can compare on lookup
@@ -14,15 +14,16 @@ type QuantumSetStore<TValue> = Set<TValue>;
 type QuantumPrimitiveBuildCallback<TValue> = (value: QuantumKeyValue<TValue>) => number | string | boolean;
 
 export class QuantumKeySet<TValue, LookupKey extends QuantumKey<TValue>>
-	extends QuantumCore<QuantumSetStore<TValue>>
+	extends QuantumCore<QuantumKeySetStore<TValue>>
 	implements IQuantumMap<QuantumKeyValue<TValue>, TValue>
 {
+	public readonly name = 'QuantumKeySet';
 	private lookupKey: QuantumKey<TValue>;
 	private lookupValueBuilder: QuantumPrimitiveBuildCallback<TValue>;
 	constructor(
 		lookupKey: LookupKey,
 		lookupValueBuilder: QuantumPrimitiveBuildCallback<TValue>,
-		driver: IStorageDriver<QuantumSetStore<TValue>>,
+		driver: IStorageDriver<QuantumKeySetStore<TValue>>,
 		options: QuantumCoreOptions = {},
 		logger?: ILoggerLike,
 		logMapping: QuantumCoreLogMap = defaultQuantumCoreLogLevels,
@@ -105,6 +106,7 @@ export class QuantumKeySet<TValue, LookupKey extends QuantumKey<TValue>>
 		if (typeof primitiveValue === 'string' || typeof primitiveValue === 'number' || typeof primitiveValue === 'boolean') {
 			return primitiveValue;
 		}
-		throw new TypeError(`QuantumKeySet: lookupValueBuilder callback function must return key as a string, number or boolean value.`);
+		/* c8 ignore next 2 */
+		throw new TypeError(`${this.name}: lookupValueBuilder callback function must return key as a string, number or boolean value.`);
 	}
 }

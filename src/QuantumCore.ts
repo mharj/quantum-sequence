@@ -1,6 +1,11 @@
 import {type ILoggerLike, type ISetOptionalLogger, MapLogger} from '@avanio/logger-like';
+import EventEmitter from 'events';
 import {type IStorageDriver} from 'tachyon-drive';
-import {type QuantumCoreLogMap} from '.';
+import {type QuantumCoreLogMap} from './QuantumCoreLogMapping.js';
+
+export type QuantumCoreEventsMap = {
+	hydrate: [];
+};
 
 export interface QuantumCoreOptions {
 	/**
@@ -9,15 +14,14 @@ export interface QuantumCoreOptions {
 	hideKey?: boolean;
 }
 
-export abstract class QuantumCore<TStore> implements ISetOptionalLogger {
+export abstract class QuantumCore<TStore> extends EventEmitter<QuantumCoreEventsMap> implements ISetOptionalLogger {
+	public abstract readonly name: string;
 	private isInitialized = false;
 	private readonly driver: IStorageDriver<TStore>;
 	protected data: TStore;
 	private readonly initialData: TStore;
 	protected logger: MapLogger<QuantumCoreLogMap>;
 	protected readonly options: QuantumCoreOptions;
-
-	private onHydrateCallbacks = new Set<() => void>();
 
 	constructor(
 		driver: IStorageDriver<TStore>,
@@ -26,6 +30,7 @@ export abstract class QuantumCore<TStore> implements ISetOptionalLogger {
 		logger: ILoggerLike | undefined,
 		logMapping: QuantumCoreLogMap,
 	) {
+		super();
 		this.driver = driver;
 		this.initialData = initialData;
 		this.data = this.driver.clone(this.initialData);
@@ -52,18 +57,6 @@ export abstract class QuantumCore<TStore> implements ISetOptionalLogger {
 	}
 
 	/**
-	 * This is called when data is replaced.
-	 *
-	 * - on Hydrate (init)
-	 * - on Clear
-	 * - on Driver update callback
-	 */
-	public onHydrate(callback: () => void): void {
-		this.logger.logKey('register_hydrate_callback', `QuantumCore: onHydrate(callback)`);
-		this.onHydrateCallbacks.add(callback);
-	}
-
-	/**
 	 * Initialize the storage driver and hydrate the data if it exists
 	 */
 	protected async coreInit(): Promise<void> {
@@ -77,7 +70,7 @@ export abstract class QuantumCore<TStore> implements ISetOptionalLogger {
 			this.isInitialized = true;
 			if (data) {
 				// call all the onHydrate callbacks
-				this.notifyHydrateCallbacks();
+				this.emit('hydrate');
 			}
 		}
 	}
@@ -99,27 +92,16 @@ export abstract class QuantumCore<TStore> implements ISetOptionalLogger {
 		await this.driver.clear();
 		this.isInitialized = false;
 		// notify all the onHydrate callbacks about data changes
-		this.notifyHydrateCallbacks();
+		this.emit('hydrate');
 	}
 
 	private onUpdateCallback(data: TStore | undefined): void {
-		if (data) {
-			this.data = data;
-		} else {
-			this.data = this.driver.clone(this.initialData);
-		}
+		this.data = data || this.driver.clone(this.initialData);
 		// notify all the onHydrate callbacks about data changes
-		this.notifyHydrateCallbacks();
+		this.emit('hydrate');
 	}
 
-	/**
-	 * notify all the onHydrate callbacks about data changes
-	 */
-	private notifyHydrateCallbacks(): void {
-		this.logger.logKey('notify_hydrate', `QuantumCore: notifyHydrateCallbacks() = ${this.onHydrateCallbacks.size.toString()}`);
-		// call all the onHydrate callbacks
-		for (const callback of this.onHydrateCallbacks) {
-			callback();
-		}
+	public toString(): string {
+		return `${this.name}(driver: ${this.driver.toString()})`;
 	}
 }

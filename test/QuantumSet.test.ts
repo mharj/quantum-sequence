@@ -1,26 +1,26 @@
 import 'mocha';
 import * as chai from 'chai';
-import * as zod from 'zod';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
 import chaiAsPromised from 'chai-as-promised';
-import {QuantumSet} from '../src/QuantumSet';
+import {QuantumSet} from '../src/index.js';
+import {z} from 'zod';
 
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-const dataSchema = zod.object({
-	date: zod.coerce.date(),
+const dataSchema = z.object({
+	date: z.coerce.date(),
 });
 
-const setDataSchema = zod.set(dataSchema);
+const setDataSchema = z.set(dataSchema);
 
-type Data = zod.infer<typeof dataSchema>;
+type Data = z.infer<typeof dataSchema>;
 
 const bufferSerializer: IPersistSerializer<Set<Data>, Buffer> = {
 	name: 'BufferSerializer',
 	serialize: (data: Set<Data>) => Buffer.from(JSON.stringify(Array.from(data))),
-	deserialize: (buffer: Buffer) => new Set(zod.array(dataSchema).parse(JSON.parse(buffer.toString()))),
+	deserialize: (buffer: Buffer) => new Set(z.array(dataSchema).parse(JSON.parse(buffer.toString()))),
 	validator: (data: Set<Data>) => setDataSchema.safeParse(data).success,
 };
 
@@ -51,6 +51,12 @@ describe('QuantumSet', () => {
 		expect(Array.from(await set.values())).to.be.deep.equal([data]);
 	});
 	it('should delete a value', async () => {
+		const restoreData = Array.from(await set.values())[0];
+		await set.delete(restoreData);
+		await expect(set.size()).to.be.eventually.equal(0);
+	});
+	it('should delete a value array', async () => {
+		await set.add(data);
 		const restoreData = Array.from(await set.values())[0];
 		await set.delete([restoreData]);
 		await expect(set.size()).to.be.eventually.equal(0);

@@ -1,4 +1,4 @@
-import {type IQuantumSequence} from './IQuantumSequence';
+import {type IQuantumSequence} from './IQuantumSequence.js';
 
 /**
  * This is the simple Map style interface for the QuantumMap class implementation.

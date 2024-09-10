@@ -1,10 +1,10 @@
-import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from '.';
-import {QuantumCore, type QuantumCoreOptions} from './QuantumCore';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from './QuantumCoreLogMapping.js';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore.js';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {type IQuantumSet} from './IQuantumSet';
+import {type IQuantumSet} from './IQuantumSet.js';
 import {type IStorageDriver} from 'tachyon-drive';
 
-type QuantumSetStore<TValue> = Set<TValue>;
+export type QuantumSetStore<TValue> = Set<TValue>;
 
 /**
  * A QuantumSet is a Set that is persisted to a storage driver when data is modified.
@@ -13,6 +13,7 @@ type QuantumSetStore<TValue> = Set<TValue>;
  * Or use QuantumKeySet or QuantumMap with primitive key instead.
  */
 export class QuantumSet<TValue> extends QuantumCore<QuantumSetStore<TValue>> implements IQuantumSet<TValue> {
+	public readonly name = 'QuantumSet';
 	constructor(
 		driver: IStorageDriver<QuantumSetStore<TValue>>,
 		options: QuantumCoreOptions = {},
