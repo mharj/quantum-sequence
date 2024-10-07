@@ -12,8 +12,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       tachyon-drive:
-        specifier: ^0.9.3
-        version: 0.9.3
+        specifier: ^0.10.0
+        version: 0.10.0
     devDependencies:
       '@stylistic/eslint-plugin':
         specifier: ^2.8.0
@@ -313,11 +313,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@luolapeikko/result-option@0.6.6':
-    resolution: {integrity: sha512-PF54uajspB5d8f+7VHa9aMwgrChdxy+lmY6qcmt2DBZqcCt/Ms/1mtxoziBU4udKumVoSRaA1pEHPuyXAWKPIA==}
+  '@luolapeikko/result-option@1.0.3':
+    resolution: {integrity: sha512-Quq+b6ERUIwCIVvfSW+QQ6w+CNjb2IUkkitAWgpfbBNFrelJV0cI21AlGo6HAcTneNznnoW5To+gxxtLytod+A==}
 
-  '@luolapeikko/ts-common@0.2.0':
-    resolution: {integrity: sha512-wVVday7XKRfVu1y5imjOFyoWmUOWhSTOsU+1E8SwmSWaXKclr3xrLgs4FQ4LxV5AbHzPZvkYgK+8qloN5uo+8w==}
+  '@luolapeikko/ts-common@0.2.4':
+    resolution: {integrity: sha512-263CeR5qdbvqDLldA7/2RFmFJi1tPyxGHlZ8I0PCfe+wo1ujJqtj893ZtdXa/R7Bc1H1pMA64R+n3QBQAtJ1vQ==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1013,6 +1013,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@10.1.0:
@@ -1789,8 +1790,8 @@ packages:
     resolution: {integrity: sha512-7gr8p9TQP6RAHusBOSLs46F4564ZrjV8xFmw5zCmgmhGUcw2hxsShhJ6CEiHQMgPDwAQ1fWHPM0ypc4RMAig4A==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
-  tachyon-drive@0.9.3:
-    resolution: {integrity: sha512-LRtjq2uOPhEZHetb06qz5hY4PHypQqVXSpqhuHLRPIRiMjNN0fF4ZUrJ1/R4GogF+wACIFVdL53BFNODlhCpIQ==}
+  tachyon-drive@0.10.0:
+    resolution: {integrity: sha512-OLwDmTM2oMhprxcRVzHEaw2cLGCayArNjGbMXOgDXCrk6xP8e3R6Aq604feISy+fcaq3MqYz6XNlfUNertRVLQ==}
 
   test-exclude@7.0.1:
     resolution: {integrity: sha512-pFYqmTw68LXVjeWJMST4+borgQP2AyMNbg1BpZh9LbyhUeNkeaPF9gzfPGUAnSMV3qPYdWUwDIjjCLiSDOl7vg==}
@@ -2144,9 +2145,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@luolapeikko/result-option@0.6.6': {}
+  '@luolapeikko/result-option@1.0.3': {}
 
-  '@luolapeikko/ts-common@0.2.0': {}
+  '@luolapeikko/ts-common@0.2.4': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3764,11 +3765,11 @@ snapshots:
       '@pkgr/core': 0.1.1
       tslib: 2.7.0
 
-  tachyon-drive@0.9.3:
+  tachyon-drive@0.10.0:
     dependencies:
       '@avanio/logger-like': 0.2.0
-      '@luolapeikko/result-option': 0.6.6
-      '@luolapeikko/ts-common': 0.2.0
+      '@luolapeikko/result-option': 1.0.3
+      '@luolapeikko/ts-common': 0.2.4
 
   test-exclude@7.0.1:
     dependencies:
