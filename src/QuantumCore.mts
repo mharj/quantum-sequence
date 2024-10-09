@@ -1,7 +1,7 @@
 import {type ILoggerLike, type ISetOptionalLogger, MapLogger} from '@avanio/logger-like';
 import EventEmitter from 'events';
 import {type IStorageDriver} from 'tachyon-drive';
-import {type QuantumCoreLogMap} from './QuantumCoreLogMapping.js';
+import {type QuantumCoreLogMap} from './QuantumCoreLogMapping.mjs';
 
 export type QuantumCoreEventsMap = {
 	hydrate: [];

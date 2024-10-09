@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable sort-keys */
-import 'mocha';
-import * as chai from 'chai';
 import * as sinon from 'sinon';
+import {beforeEach, describe, expect, it} from 'vitest';
 import {type ILoggerLike, LogLevel} from '@avanio/logger-like';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
-import chaiAsPromised from 'chai-as-promised';
-import {QuantumMap} from '../src/index.js';
+import {QuantumMap} from '../src/index.mjs';
 import {z} from 'zod';
-
-chai.use(chaiAsPromised);
-
-const expect = chai.expect;
 
 const dataSchema = z.object({
 	test: z.string(),
@@ -86,10 +80,10 @@ describe('QuantumMap', () => {
 		map = new QuantumMap<string, Data>(driver); // we should hydrate the map from the driver
 		const value = await map.get('key1');
 		expect(value).to.deep.equal({test: 'test'});
-		await expect(map.size()).to.be.eventually.equal(1);
+		await expect(map.size()).resolves.toEqual(1);
 	});
 	it('should have a value', async () => {
-		await expect(map.has('key1')).to.be.eventually.equal(true);
+		await expect(map.has('key1')).resolves.toEqual(true);
 	});
 	it('should get all iterator values', async () => {
 		expect(Array.from(await map.entries())).to.be.deep.equal([['key1', {test: 'test'}]]);
@@ -100,19 +94,19 @@ describe('QuantumMap', () => {
 		await map.delete(['key1', 'key2']);
 		const value = await map.get('key1');
 		expect(value).to.be.equal(undefined);
-		await expect(map.size()).to.be.eventually.equal(0);
+		await expect(map.size()).resolves.toEqual(0);
 	});
 	it('should delete a value', async () => {
 		await map.set('key1', {test: 'test'});
 		await map.delete('key1');
 		const value = await map.get('key1');
 		expect(value).to.be.equal(undefined);
-		await expect(map.size()).to.be.eventually.equal(0);
+		await expect(map.size()).resolves.toEqual(0);
 	});
 	it('should clear values', async () => {
 		await map.set('key1', {test: 'test'});
 		await map.clear();
-		await expect(map.size()).to.be.eventually.equal(0);
+		await expect(map.size()).resolves.toEqual(0);
 	});
 	it('should get toString()', function () {
 		expect(map.toString()).to.satisfies((value: string) => value.startsWith('QuantumMap('));

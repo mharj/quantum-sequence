@@ -1,13 +1,7 @@
-import 'mocha';
-import * as chai from 'chai';
+import {describe, expect, it} from 'vitest';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
-import chaiAsPromised from 'chai-as-promised';
-import {QuantumKeySet} from '../src/index.js';
+import {QuantumKeySet} from '../src/index.mjs';
 import {z} from 'zod';
-
-chai.use(chaiAsPromised);
-
-const expect = chai.expect;
 
 const dataSchema = z.object({
 	date: z.coerce.date(),
@@ -48,11 +42,11 @@ describe('QuantumKeySet', () => {
 		set = new QuantumKeySet<Data, 'date'>('date', (value) => value.getTime(), driver); // we should hydrate the set from the driver
 		const value = await set.get(new Date(ts));
 		expect(value).to.deep.equal({date: new Date(ts)});
-		await expect(set.size()).to.be.eventually.equal(1);
+		await expect(set.size()).resolves.toEqual(1);
 		expect(Array.from(await set.values())).to.be.deep.equal([{date: new Date(ts)}]);
 	});
 	it('should have a value', async () => {
-		await expect(set.has(new Date(ts))).to.be.eventually.equal(true);
+		await expect(set.has(new Date(ts))).resolves.toEqual(true);
 	});
 	it('should get all iterator values', async () => {
 		expect(Array.from(await set.entries())).to.be.deep.equal([[new Date(ts), {date: new Date(ts)}]]);
@@ -63,11 +57,11 @@ describe('QuantumKeySet', () => {
 		await set.delete([new Date(ts), new Date(ts)]);
 		const value = await set.get(new Date(ts));
 		expect(value).to.be.equal(undefined);
-		await expect(set.size()).to.be.eventually.equal(0);
+		await expect(set.size()).resolves.toEqual(0);
 	});
 	it('should clear values', async () => {
 		await set.set(new Date(ts), {date: new Date(ts)});
 		await set.clear();
-		await expect(set.size()).to.be.eventually.equal(0);
+		await expect(set.size()).resolves.toEqual(0);
 	});
 });

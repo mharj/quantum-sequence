@@ -1,4 +1,4 @@
-import {type IQuantumSequence} from './IQuantumSequence.js';
+import {type IQuantumSequence} from './IQuantumSequence.mjs';
 
 /**
  * This is the simple Set style interface for the QuantumSet class implementation.

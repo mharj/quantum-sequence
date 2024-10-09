@@ -1,7 +1,7 @@
-import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from './QuantumCoreLogMapping.js';
-import {QuantumCore, type QuantumCoreOptions} from './QuantumCore.js';
+import {defaultQuantumCoreLogLevels, type QuantumCoreLogMap} from './QuantumCoreLogMapping.mjs';
+import {QuantumCore, type QuantumCoreOptions} from './QuantumCore.mjs';
 import type {ILoggerLike} from '@avanio/logger-like';
-import {type IQuantumMap} from './IQuantumMap.js';
+import {type IQuantumMap} from './IQuantumMap.mjs';
 import {type IStorageDriver} from 'tachyon-drive';
 
 export type QuantumMapStore<TKey, TValue> = Map<TKey, TValue>;

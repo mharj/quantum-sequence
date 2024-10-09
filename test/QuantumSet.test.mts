@@ -1,13 +1,7 @@
-import 'mocha';
-import * as chai from 'chai';
+import {describe, expect, it} from 'vitest';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
-import chaiAsPromised from 'chai-as-promised';
-import {QuantumSet} from '../src/index.js';
+import {QuantumSet} from '../src/index.mjs';
 import {z} from 'zod';
-
-chai.use(chaiAsPromised);
-
-const expect = chai.expect;
 
 const dataSchema = z.object({
 	date: z.coerce.date(),
@@ -46,24 +40,24 @@ describe('QuantumSet', () => {
 		if (!hydratedValue) {
 			throw new Error('Value not found');
 		}
-		await expect(set.has(hydratedValue)).to.be.eventually.eq(true);
-		await expect(set.size()).to.be.eventually.equal(1);
+		await expect(set.has(hydratedValue)).resolves.toEqual(true);
+		await expect(set.size()).resolves.toEqual(1);
 		expect(Array.from(await set.values())).to.be.deep.equal([data]);
 	});
 	it('should delete a value', async () => {
 		const restoreData = Array.from(await set.values())[0];
 		await set.delete(restoreData);
-		await expect(set.size()).to.be.eventually.equal(0);
+		await expect(set.size()).resolves.toEqual(0);
 	});
 	it('should delete a value array', async () => {
 		await set.add(data);
 		const restoreData = Array.from(await set.values())[0];
 		await set.delete([restoreData]);
-		await expect(set.size()).to.be.eventually.equal(0);
+		await expect(set.size()).resolves.toEqual(0);
 	});
 	it('should clear values', async () => {
 		await set.add(data);
 		await set.clear();
-		await expect(set.size()).to.be.eventually.equal(0);
+		await expect(set.size()).resolves.toEqual(0);
 	});
 });
