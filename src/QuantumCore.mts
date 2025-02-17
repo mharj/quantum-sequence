@@ -1,5 +1,5 @@
-import {type ILoggerLike, type ISetOptionalLogger, MapLogger} from '@avanio/logger-like';
 import EventEmitter from 'events';
+import {type ILoggerLike, type ISetOptionalLogger, MapLogger} from '@avanio/logger-like';
 import {type IStorageDriver} from 'tachyon-drive';
 import {type QuantumCoreLogMap} from './QuantumCoreLogMapping.mjs';
 
@@ -56,6 +56,10 @@ export abstract class QuantumCore<TStore> extends EventEmitter<QuantumCoreEvents
 		this.logger.setLogMapping(map);
 	}
 
+	public toString(): string {
+		return `${this.name}(driver: ${this.driver.toString()})`;
+	}
+
 	/**
 	 * Initialize the storage driver and hydrate the data if it exists
 	 */
@@ -96,12 +100,9 @@ export abstract class QuantumCore<TStore> extends EventEmitter<QuantumCoreEvents
 	}
 
 	private onUpdateCallback(data: TStore | undefined): void {
+		this.logger.logKey('driver_update_event', `QuantumCore: onUpdateCallback()`);
 		this.data = data || this.driver.clone(this.initialData);
 		// notify all the onHydrate callbacks about data changes
 		this.emit('hydrate');
-	}
-
-	public toString(): string {
-		return `${this.name}(driver: ${this.driver.toString()})`;
 	}
 }

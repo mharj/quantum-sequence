@@ -1,7 +1,7 @@
-import {describe, expect, it} from 'vitest';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
-import {QuantumKeySet} from '../src/index.mjs';
+import {describe, expect, it} from 'vitest';
 import {z} from 'zod';
+import {QuantumKeySet} from '../src/index.mjs';
 
 const dataSchema = z.object({
 	date: z.coerce.date(),

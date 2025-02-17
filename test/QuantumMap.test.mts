@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable sort-keys */
-import * as sinon from 'sinon';
-import {beforeEach, describe, expect, it} from 'vitest';
 import {type ILoggerLike, LogLevel} from '@avanio/logger-like';
+import * as sinon from 'sinon';
 import {type IPersistSerializer, MemoryStorageDriver} from 'tachyon-drive';
-import {QuantumMap} from '../src/index.mjs';
+import {beforeEach, describe, expect, it} from 'vitest';
 import {z} from 'zod';
+import {QuantumMap} from '../src/index.mjs';
 
 const dataSchema = z.object({
 	test: z.string(),
@@ -37,6 +35,7 @@ const spyLogger: ILoggerLike = {
 const debugLogMapping = {
 	clear: LogLevel.Debug,
 	deserialize: LogLevel.Debug,
+	driver_update_event: LogLevel.Debug,
 	hydrate: LogLevel.Debug,
 	init: LogLevel.Debug,
 	store: LogLevel.Debug,
@@ -61,10 +60,11 @@ describe('QuantumMap', () => {
 		map = new QuantumMap<string, Data>(driver, undefined, spyLogger, {
 			clear: LogLevel.Debug,
 			constructor: LogLevel.Debug,
+			driver_update_event: LogLevel.Debug,
 			init: LogLevel.Debug,
-			store: LogLevel.Debug,
 			notify_hydrate: LogLevel.Debug,
 			register_hydrate_callback: LogLevel.Debug,
+			store: LogLevel.Debug,
 		});
 		await map.init();
 		expect(debugSpy.callCount).to.be.equal(4);
