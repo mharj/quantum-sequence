@@ -56,7 +56,7 @@ describe('QuantumMap', () => {
 	});
 	it('should create a new instance', async () => {
 		driver = new MemoryStorageDriver('MemoryStorageDriver', bufferSerializer, null, undefined, spyLogger);
-		driver.setLogMapping(debugLogMapping);
+		driver.logger.setLogMapping(debugLogMapping);
 		map = new QuantumMap<string, Data>(driver, undefined, spyLogger, {
 			clear: LogLevel.Debug,
 			constructor: LogLevel.Debug,
