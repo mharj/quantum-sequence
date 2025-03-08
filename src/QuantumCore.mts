@@ -101,7 +101,7 @@ export abstract class QuantumCore<TStore> extends EventEmitter<QuantumCoreEvents
 
 	private onUpdateCallback(data: TStore | undefined): void {
 		this.logger.logKey('driver_update_event', `QuantumCore: onUpdateCallback()`);
-		this.data = data || this.driver.clone(this.initialData);
+		this.data = data ?? this.driver.clone(this.initialData);
 		// notify all the onHydrate callbacks about data changes
 		this.emit('hydrate');
 	}

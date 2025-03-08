@@ -1,4 +1,4 @@
-import {LogLevel, type LogMapping} from '@avanio/logger-like';
+import {LogLevel, type LogMapInfer} from '@avanio/logger-like';
 
 /**
  * The default log levels for the storage driver.
@@ -13,4 +13,4 @@ export const defaultQuantumCoreLogLevels = {
 	store: LogLevel.Debug,
 };
 
-export type QuantumCoreLogMap = LogMapping<keyof typeof defaultQuantumCoreLogLevels>;
+export type QuantumCoreLogMap = LogMapInfer<typeof defaultQuantumCoreLogLevels>;
